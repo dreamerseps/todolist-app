@@ -1,0 +1,182 @@
+{
+  "nav": {
+    "todos": "할일 목록",
+    "categories": "카테고리",
+    "editProfile": "프로필 수정",
+    "logout": "로그아웃"
+  },
+  "common": {
+    "cancel": "취소",
+    "save": "저장",
+    "add": "추가",
+    "delete": "삭제",
+    "edit": "수정",
+    "complete": "완료",
+    "uncomplete": "완료 취소",
+    "reset": "초기화",
+    "default": "기본"
+  },
+  "login": {
+    "title": "TodoList",
+    "email": "이메일",
+    "password": "비밀번호",
+    "passwordPlaceholder": "비밀번호 입력",
+    "submit": "로그인",
+    "noAccount": "계정이 없으신가요?",
+    "signupLink": "회원가입",
+    "error": {
+      "invalid": "이메일 또는 비밀번호가 일치하지 않습니다.",
+      "failed": "로그인에 실패했습니다."
+    },
+    "validation": {
+      "email": "올바른 이메일을 입력해주세요.",
+      "password": "비밀번호를 입력해주세요."
+    }
+  },
+  "signup": {
+    "title": "회원가입",
+    "name": "이름",
+    "namePlaceholder": "이름 입력",
+    "email": "이메일",
+    "password": "비밀번호",
+    "passwordPlaceholder": "8자 이상 입력",
+    "passwordConfirm": "비밀번호 확인",
+    "passwordConfirmPlaceholder": "비밀번호 재입력",
+    "submit": "회원가입",
+    "hasAccount": "이미 계정이 있으신가요?",
+    "loginLink": "로그인",
+    "error": {
+      "emailConflict": "이미 사용 중인 이메일입니다.",
+      "failed": "회원가입에 실패했습니다."
+    },
+    "validation": {
+      "name": "이름을 입력해주세요.",
+      "email": "올바른 이메일 형식을 입력해주세요.",
+      "passwordLength": "비밀번호는 8자 이상이어야 합니다.",
+      "passwordMatch": "비밀번호가 일치하지 않습니다."
+    }
+  },
+  "todos": {
+    "title": "할일 목록",
+    "addBtn": "+ 할일 추가",
+    "empty": "등록된 할일이 없습니다",
+    "error": "할일 목록을 불러오는데 실패했습니다.",
+    "delete": {
+      "title": "할일 삭제",
+      "confirm": "정말로 이 할일을 삭제하시겠습니까?"
+    },
+    "dueDate": { "none": "기한 없음" },
+    "sort": {
+      "createdAt": "최신순(기본)",
+      "dueDate": "마감일 빠른 순"
+    }
+  },
+  "addTodo": {
+    "title": "할일 추가",
+    "titleLabel": "제목",
+    "titlePlaceholder": "할일 제목 입력",
+    "category": "카테고리",
+    "categoryPlaceholder": "카테고리 선택",
+    "description": "설명 (선택)",
+    "descriptionPlaceholder": "설명 입력",
+    "dueDate": "마감일 (선택)",
+    "confirm": "추가",
+    "validation": {
+      "title": "제목을 입력해주세요.",
+      "category": "카테고리를 선택해주세요."
+    }
+  },
+  "editTodo": {
+    "title": "할일 수정",
+    "confirm": "저장"
+  },
+  "filter": {
+    "toggle": "필터",
+    "categoryAll": "카테고리 전체",
+    "completion": {
+      "all": "전체",
+      "completed": "완료",
+      "incomplete": "미완료"
+    },
+    "aria": {
+      "toggle": "필터 토글",
+      "startDate": "시작일",
+      "endDate": "종료일",
+      "completion": "완료 여부"
+    }
+  },
+  "categories": {
+    "title": "카테고리 관리",
+    "addBtn": "+ 카테고리 추가",
+    "empty": "등록된 카테고리가 없습니다.",
+    "error": "카테고리 목록을 불러오는데 실패했습니다.",
+    "addModal": {
+      "title": "카테고리 추가",
+      "label": "카테고리 이름",
+      "placeholder": "카테고리 이름 입력",
+      "confirm": "추가"
+    },
+    "deleteModal": {
+      "title": "카테고리 삭제",
+      "confirm": "정말로 이 카테고리를 삭제하시겠습니까?"
+    },
+    "validation": { "name": "카테고리 이름을 입력해주세요." },
+    "aria": {
+      "editName": "카테고리 이름 편집",
+      "confirmEdit": "편집 확인",
+      "cancelEdit": "편집 취소"
+    }
+  },
+  "profile": {
+    "title": "프로필",
+    "basicInfo": "기본 정보",
+    "email": "이메일",
+    "emailHint": "(변경 불가)",
+    "name": "이름",
+    "namePlaceholder": "이름 입력",
+    "saveName": "이름 저장",
+    "changePassword": "비밀번호 변경",
+    "currentPassword": "현재 비밀번호",
+    "currentPasswordPlaceholder": "현재 비밀번호 입력",
+    "newPassword": "새 비밀번호",
+    "newPasswordPlaceholder": "8자 이상 입력",
+    "confirmPassword": "새 비밀번호 확인",
+    "confirmPasswordPlaceholder": "새 비밀번호 재입력",
+    "changePasswordBtn": "비밀번호 변경",
+    "validation": {
+      "currentPassword": "현재 비밀번호를 입력해주세요.",
+      "newPasswordLength": "비밀번호는 {{count}}자 이상이어야 합니다.",
+      "passwordMatch": "비밀번호가 일치하지 않습니다."
+    }
+  },
+  "toast": {
+    "todo": {
+      "added": "할일이 추가되었습니다.",
+      "updated": "할일이 수정되었습니다.",
+      "deleted": "할일이 삭제되었습니다.",
+      "addFailed": "할일 추가에 실패했습니다.",
+      "updateFailed": "할일 수정에 실패했습니다.",
+      "deleteFailed": "할일 삭제에 실패했습니다."
+    },
+    "category": {
+      "added": "카테고리가 추가되었습니다.",
+      "updated": "카테고리가 수정되었습니다.",
+      "deleted": "카테고리가 삭제되었습니다.",
+      "addFailed": "카테고리 추가에 실패했습니다.",
+      "updateFailed": "카테고리 수정에 실패했습니다.",
+      "deleteFailed": "카테고리 삭제에 실패했습니다.",
+      "deleteForbidden": "할일이 속한 카테고리는 삭제할 수 없습니다."
+    },
+    "profile": {
+      "nameUpdated": "이름이 수정되었습니다.",
+      "nameUpdateFailed": "이름 수정에 실패했습니다.",
+      "passwordChanged": "비밀번호가 변경되었습니다.",
+      "passwordWrong": "현재 비밀번호가 올바르지 않습니다.",
+      "passwordChangeFailed": "비밀번호 변경에 실패했습니다."
+    }
+  },
+  "settings": {
+    "language": "언어",
+    "darkMode": "다크 모드"
+  }
+}

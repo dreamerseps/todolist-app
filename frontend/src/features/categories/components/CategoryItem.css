@@ -1,0 +1,77 @@
+.category-item {
+  display: flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-2);
+}
+
+.category-item-default {
+  background: var(--color-bg-page);
+  opacity: 0.85;
+}
+
+.category-item-view {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.category-item-name {
+  flex: 1;
+  font-size: var(--text-md);
+  color: var(--color-text-primary);
+}
+
+.category-item-badge {
+  font-size: var(--text-xs);
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.category-item-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.category-item-edit {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.category-item-input {
+  flex: 1;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  font-size: var(--text-md);
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+  outline: none;
+}
+
+.category-item-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: background 0.15s;
+}
+
+.category-item-icon-btn:hover {
+  background: var(--color-bg-page);
+}

@@ -1,0 +1,182 @@
+{
+  "nav": {
+    "todos": "Todo List",
+    "categories": "Categories",
+    "editProfile": "Edit Profile",
+    "logout": "Logout"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "add": "Add",
+    "delete": "Delete",
+    "edit": "Edit",
+    "complete": "Complete",
+    "uncomplete": "Uncheck",
+    "reset": "Reset",
+    "default": "Default"
+  },
+  "login": {
+    "title": "TodoList",
+    "email": "Email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter password",
+    "submit": "Login",
+    "noAccount": "Don't have an account?",
+    "signupLink": "Sign up",
+    "error": {
+      "invalid": "Email or password is incorrect.",
+      "failed": "Login failed."
+    },
+    "validation": {
+      "email": "Please enter a valid email.",
+      "password": "Please enter your password."
+    }
+  },
+  "signup": {
+    "title": "Sign Up",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "email": "Email",
+    "password": "Password",
+    "passwordPlaceholder": "At least 8 characters",
+    "passwordConfirm": "Confirm Password",
+    "passwordConfirmPlaceholder": "Re-enter password",
+    "submit": "Sign Up",
+    "hasAccount": "Already have an account?",
+    "loginLink": "Login",
+    "error": {
+      "emailConflict": "Email is already in use.",
+      "failed": "Sign up failed."
+    },
+    "validation": {
+      "name": "Please enter your name.",
+      "email": "Please enter a valid email address.",
+      "passwordLength": "Password must be at least 8 characters.",
+      "passwordMatch": "Passwords do not match."
+    }
+  },
+  "todos": {
+    "title": "Todo List",
+    "addBtn": "+ Add Todo",
+    "empty": "No todos found",
+    "error": "Failed to load todos.",
+    "delete": {
+      "title": "Delete Todo",
+      "confirm": "Are you sure you want to delete this todo?"
+    },
+    "dueDate": { "none": "No due date" },
+    "sort": {
+      "createdAt": "Newest (default)",
+      "dueDate": "Due date (earliest)"
+    }
+  },
+  "addTodo": {
+    "title": "Add Todo",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Enter todo title",
+    "category": "Category",
+    "categoryPlaceholder": "Select category",
+    "description": "Description (optional)",
+    "descriptionPlaceholder": "Enter description",
+    "dueDate": "Due Date (optional)",
+    "confirm": "Add",
+    "validation": {
+      "title": "Please enter a title.",
+      "category": "Please select a category."
+    }
+  },
+  "editTodo": {
+    "title": "Edit Todo",
+    "confirm": "Save"
+  },
+  "filter": {
+    "toggle": "Filter",
+    "categoryAll": "All Categories",
+    "completion": {
+      "all": "All",
+      "completed": "Completed",
+      "incomplete": "Incomplete"
+    },
+    "aria": {
+      "toggle": "Toggle filter",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "completion": "Completion status"
+    }
+  },
+  "categories": {
+    "title": "Category Management",
+    "addBtn": "+ Add Category",
+    "empty": "No categories found.",
+    "error": "Failed to load categories.",
+    "addModal": {
+      "title": "Add Category",
+      "label": "Category Name",
+      "placeholder": "Enter category name",
+      "confirm": "Add"
+    },
+    "deleteModal": {
+      "title": "Delete Category",
+      "confirm": "Are you sure you want to delete this category?"
+    },
+    "validation": { "name": "Please enter a category name." },
+    "aria": {
+      "editName": "Edit category name",
+      "confirmEdit": "Confirm edit",
+      "cancelEdit": "Cancel edit"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "basicInfo": "Basic Information",
+    "email": "Email",
+    "emailHint": "(Cannot be changed)",
+    "name": "Name",
+    "namePlaceholder": "Enter name",
+    "saveName": "Save Name",
+    "changePassword": "Change Password",
+    "currentPassword": "Current Password",
+    "currentPasswordPlaceholder": "Enter current password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "At least 8 characters",
+    "confirmPassword": "Confirm New Password",
+    "confirmPasswordPlaceholder": "Re-enter new password",
+    "changePasswordBtn": "Change Password",
+    "validation": {
+      "currentPassword": "Please enter your current password.",
+      "newPasswordLength": "Password must be at least {{count}} characters.",
+      "passwordMatch": "Passwords do not match."
+    }
+  },
+  "toast": {
+    "todo": {
+      "added": "Todo added successfully.",
+      "updated": "Todo updated successfully.",
+      "deleted": "Todo deleted successfully.",
+      "addFailed": "Failed to add todo.",
+      "updateFailed": "Failed to update todo.",
+      "deleteFailed": "Failed to delete todo."
+    },
+    "category": {
+      "added": "Category added successfully.",
+      "updated": "Category updated successfully.",
+      "deleted": "Category deleted successfully.",
+      "addFailed": "Failed to add category.",
+      "updateFailed": "Failed to update category.",
+      "deleteFailed": "Failed to delete category.",
+      "deleteForbidden": "Cannot delete a category that has todos."
+    },
+    "profile": {
+      "nameUpdated": "Name updated successfully.",
+      "nameUpdateFailed": "Failed to update name.",
+      "passwordChanged": "Password changed successfully.",
+      "passwordWrong": "Current password is incorrect.",
+      "passwordChangeFailed": "Failed to change password."
+    }
+  },
+  "settings": {
+    "language": "Language",
+    "darkMode": "Dark Mode"
+  }
+}

@@ -1,0 +1,105 @@
+.todo-filter {
+  margin-bottom: 1rem;
+}
+
+.todo-filter-toggle {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+
+.todo-filter-toggle-icon {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.todo-filter-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.todo-filter-date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.todo-filter-date-input {
+  padding: 0.375rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+}
+
+.todo-filter-date-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.todo-filter-date-sep {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.todo-filter-completion {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.todo-filter-tab {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  border: none;
+  background: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.todo-filter-tab:not(:last-child) {
+  border-right: 1px solid var(--color-border);
+}
+
+.todo-filter-tab.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.todo-filter-tab:hover:not(.active) {
+  background: var(--color-bg-page);
+}
+
+@media (max-width: 767px) {
+  .todo-filter-toggle {
+    display: flex;
+  }
+
+  .todo-filter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .todo-filter-date {
+    flex-wrap: wrap;
+  }
+
+  .todo-filter-date-input {
+    flex: 1;
+    min-width: 0;
+  }
+}

@@ -17,6 +17,10 @@
 | 1.0 | 2026-05-13 | yoseb lee | 최초 작성 — 전체 스택 공통 원칙, 의존성 레이어, 코드/네이밍 규칙, 테스트 원칙, 설정/보안/운영 원칙, 프론트엔드/백엔드 디렉토리 구조 정의 |
 | 1.1 | 2026-05-13 | yoseb lee | 기술 스택 일관성 검토 반영 — axios interceptor 용어 정정, 백엔드 types/ 확장자 .ts→.js 일관화 |
 | 1.2 | 2026-05-13 | yoseb lee | 인증 방식 변경 — Refresh Token 저장 위치를 httpOnly Cookie → Zustand 메모리로 변경, CORS credentials 비활성화 |
+| 1.3 | 2026-05-13 | yoseb lee | 백엔드 언어 결정 — TypeScript 미사용, JavaScript(CommonJS) + JSDoc으로 확정. 관련 예시·환경변수·디렉토리 기술 전면 반영 |
+| 1.4 | 2026-05-14 | yoseb lee | 구현 결과 반영 — CORS_ORIGIN 기본값 `localhost:3000` → `localhost:5173`(Vite), .env.example 실제 구현 기준으로 정리, PORT 기본값 3000 명시 |
+| 1.5 | 2026-05-14 | yoseb lee | 추가 구현 반영 — todos.due_date 타입 DATE → TIMESTAMP, 프론트엔드 환경변수 포트 통일(3001→3000), 개발 환경 CORS origin 수정 |
+| 1.6 | 2026-05-14 | yoseb lee | 추가 구현 반영 — 기술 스택에 i18next/react-i18next 추가, settingsStore 추가, 다국어·테마 관련 디렉토리 구조 반영 |
 
 ---
 
@@ -47,26 +51,26 @@
 
 ### 1.3 인터페이스 기반 설계
 
-**원칙:** TypeScript의 `interface`/`type`을 활용하여 명시적인 계약(contract)을 정의하고, 구현체는 이를 준수하도록 설계한다.
+**원칙:** 계층 간 데이터 구조를 명시적으로 정의하여 암묵적 의존성을 제거한다. 프론트엔드는 TypeScript `interface`/`type`을, 백엔드는 JSDoc `@typedef`를 사용한다.
 
 **근거:** 타입 안정성을 높이고, 코드 가독성을 개선하며, 추후 구현 교체가 용이해진다.
 
 **TodoListApp 적용 예시:**
 ```typescript
-// 프론트엔드: API 응답 타입 정의
+// 프론트엔드 (TypeScript): API 응답 타입 정의
 type TodoItem = {
   id: string;
   userId: string;
   categoryId: string;
   title: string;
-  description: string;
+  description: string | null;
   dueDate: string | null;
   isCompleted: boolean;
   createdAt: string;
   updatedAt: string;
 };
 
-// 백엔드: API 응답 구조 정의
+// 프론트엔드 (TypeScript): 공통 응답 래퍼
 interface ApiResponse<T> {
   success: boolean;
   code: string;
@@ -74,6 +78,22 @@ interface ApiResponse<T> {
   data?: T;
   detail?: string;
 }
+```
+
+```javascript
+// 백엔드 (JavaScript JSDoc): 타입 문서화
+/**
+ * @typedef {Object} TodoItem
+ * @property {string} id
+ * @property {string} userId
+ * @property {string} categoryId
+ * @property {string} title
+ * @property {string|null} description
+ * @property {string|null} dueDate
+ * @property {boolean} isCompleted
+ * @property {Date} createdAt
+ * @property {Date} updatedAt
+ */
 ```
 
 ### 1.4 불변성(Immutability) 우선
@@ -84,7 +104,7 @@ interface ApiResponse<T> {
 
 **TodoListApp 적용 예시:**
 ```typescript
-// 프론트엔드: Zustand 상태 업데이트
+// 프론트엔드 (TypeScript): Zustand 상태 업데이트
 // 좋음: 새로운 배열/객체 생성
 const addTodo = (todo: TodoItem) => {
   set(state => ({
@@ -92,13 +112,15 @@ const addTodo = (todo: TodoItem) => {
   }));
 };
 
-// 나쁨: 기존 배열 직접 변경
+// 나쁨: 기존 배열 직접 변경 (절대 금지)
 const addTodo = (todo: TodoItem) => {
   const state = get();
-  state.todos.push(todo); // 절대 금지
+  state.todos.push(todo);
 };
+```
 
-// 백엔드: Object.assign 또는 spread 연산자 사용
+```javascript
+// 백엔드 (JavaScript): spread 연산자로 새 객체 생성
 const updatedTodo = { ...existingTodo, title: newTitle };
 ```
 
@@ -110,7 +132,7 @@ const updatedTodo = { ...existingTodo, title: newTitle };
 
 **TodoListApp 적용 예시:**
 ```typescript
-// 프론트엔드: Custom Hook의 명시적 의존성
+// 프론트엔드 (TypeScript): Custom Hook의 명시적 의존성
 function useFetchTodos(filterParams?: FilterParams) {
   // ✓ TanStack Query 의존성은 Hook 내부에서만 활용
   // ✓ filterParams는 매개변수로 명시적 수신
@@ -120,24 +142,24 @@ function useFetchTodos(filterParams?: FilterParams) {
   });
   return query;
 }
+```
 
-// 백엔드: 서비스 계층의 명시적 의존성
-class TodoService {
-  constructor(
-    private todoRepository: TodoRepository,
-    private categoryRepository: CategoryRepository,
-    private logger: Logger
-  ) {}
-  
-  async updateTodo(todoId: string, userId: string, data: UpdateTodoDTO) {
-    // 의존성이 모두 constructor를 통해 전달됨 (명시적)
-    const todo = await this.todoRepository.findById(todoId);
-    // ...
-  }
+```javascript
+// 백엔드 (JavaScript): 서비스 계층의 명시적 의존성
+// repository 모듈을 require로 명시적으로 가져옴
+const todoRepository     = require('../repositories/todoRepository');
+const categoryRepository = require('../repositories/categoryRepository');
+
+async function updateTodo(todoId, userId, data) {
+  // 의존성이 모두 require로 명시적으로 선언됨
+  const todo = await todoRepository.findById(todoId, userId);
+  // ...
 }
 
-// 반례: 전역 변수나 singleton 직접 접근 (금지)
-const updatedTodo = updateTodo(todoId); // db 연결을 어디서 가져오는가? 불명확
+// 반례: 함수 내부에서 DB 풀을 직접 생성 (금지)
+async function updateTodo(todoId) {
+  const pool = new Pool(); // 어디서 연결 설정을 가져오는가? 불명확
+}
 ```
 
 ---
@@ -274,7 +296,9 @@ HTTP Request → Router → Middleware(JWT) → Controller → Service → Repos
 | **Service 메서드** | camelCase, 동사 시작 | `fetchUserTodos()`, `validateCategoryDeletion()` |
 | **Repository 메서드** | camelCase, `find`/`create`/`update`/`delete` | `findById()`, `createTodo()`, `updateByUserId()` |
 
-### 3.3 TypeScript 타입/인터페이스 네이밍
+### 3.3 프론트엔드 TypeScript 타입/인터페이스 네이밍
+
+> 이 규칙은 **프론트엔드(TypeScript)** 에만 적용된다. 백엔드는 JavaScript + JSDoc을 사용한다.
 
 **원칙:** `I` prefix를 사용하지 않으며, 타입과 인터페이스는 PascalCase를 따른다.
 
@@ -316,89 +340,58 @@ type CreateTodoResponse = ApiResponse<TodoItem>;
 type ErrorResponse = ApiResponse<null>;
 ```
 
-### 3.5 DB 컬럼명과 TypeScript 변수명 변환 규칙
+### 3.5 DB 컬럼명과 JavaScript 객체 속성명 변환 규칙
 
-**원칙:** PostgreSQL 테이블의 컬럼명은 `snake_case`이고, TypeScript 객체의 속성명은 `camelCase`로 자동 변환된다.
+**원칙:** PostgreSQL 테이블의 컬럼명은 `snake_case`이고, JavaScript/TypeScript 객체의 속성명은 `camelCase`로 변환한다. 변환은 Repository 계층의 `toXxx()` 헬퍼 함수에서 수행한다.
 
-**DB 스키마 (snake_case):**
+**DB 스키마 (snake_case) — schema.sql 기준:**
 ```sql
 CREATE TABLE users (
-  id UUID PRIMARY KEY,
-  email VARCHAR(255) UNIQUE NOT NULL,
+  id            UUID         PRIMARY KEY DEFAULT uuid_generate_v4(),
+  email         VARCHAR(255) NOT NULL UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
-  full_name VARCHAR(100) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  name          VARCHAR(100) NOT NULL,
+  created_at    TIMESTAMP    NOT NULL DEFAULT NOW(),
+  updated_at    TIMESTAMP    NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE todos (
-  id UUID PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES users(id),
-  category_id UUID NOT NULL REFERENCES categories(id),
-  title VARCHAR(200) NOT NULL,
-  description TEXT,
-  due_date DATE,
-  is_completed BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  id           UUID         PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id      UUID         NOT NULL REFERENCES users(id),
+  category_id  UUID         NOT NULL REFERENCES categories(id),
+  title        VARCHAR(255) NOT NULL,
+  description  TEXT,
+  due_date     TIMESTAMP,
+  is_completed BOOLEAN      NOT NULL DEFAULT false,
+  created_at   TIMESTAMP    NOT NULL DEFAULT NOW(),
+  updated_at   TIMESTAMP    NOT NULL DEFAULT NOW()
 );
 ```
 
-**TypeScript 타입 (camelCase):**
-```typescript
-// Repository에서 반환하는 타입 (DB 그대로)
-interface UserRow {
-  id: string;
-  email: string;
-  password_hash: string; // Repository 계층에서는 스네이크 케이스 허용
-  full_name: string;
-  created_at: string;
-  updated_at: string;
+**백엔드 Repository 변환 헬퍼 (JavaScript):**
+```javascript
+// Repository 계층: DB row → camelCase 객체 변환
+function toUser(row) {
+  if (!row) return null;
+  return {
+    id:        row.id,
+    email:     row.email,
+    name:      row.name,        // snake_case 없음
+    createdAt: row.created_at,  // snake_case → camelCase
+    updatedAt: row.updated_at,
+    // password_hash는 의도적으로 제외
+  };
 }
 
-// Service에서 반환하는 타입 (변환됨)
-interface User {
-  id: string;
-  email: string;
-  passwordHash: string; // 또는 숨김 (password_hash 제외)
-  fullName: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-// 프론트엔드에서 사용하는 타입 (camelCase)
-type UserProfile = {
-  id: string;
-  email: string;
-  name: string; // fullName → name으로 단순화 가능
-  createdAt: string;
-};
+// findByEmail은 bcrypt 비교를 위해 password_hash 포함 원본 반환
+// findById 등 응답용 함수는 toUser()를 통해 password_hash 제거
 ```
 
 **변환 규칙:**
-- Repository 계층: DB 컬럼명 그대로 사용 가능 (snake_case)
-- Service 계층: camelCase로 변환하여 반환
-- Controller 계층: Service에서 받은 camelCase 객체 그대로 응답
-- 프론트엔드: API 응답을 camelCase로 수신 및 사용
-
-**구현 헬퍼 (필요시):**
-```typescript
-// Utility: snake_case → camelCase 자동 변환
-function toCamelCase(obj: any): any {
-  if (Array.isArray(obj)) return obj.map(toCamelCase);
-  if (obj === null || typeof obj !== 'object') return obj;
-  
-  return Object.keys(obj).reduce((result, key) => {
-    const camelKey = key.replace(/_([a-z])/g, (g) => g[1].toUpperCase());
-    result[camelKey] = toCamelCase(obj[key]);
-    return result;
-  }, {});
-}
-
-// 사용 예
-const userRow = { id: '123', full_name: 'John Doe', created_at: '2026-05-13' };
-const user = toCamelCase(userRow); // { id: '123', fullName: 'John Doe', createdAt: '2026-05-13' }
-```
+- Repository 계층: DB row는 snake_case. `toXxx()` 헬퍼로 camelCase 변환 후 반환
+- Service 계층: Repository에서 이미 camelCase로 받음
+- Controller 계층: Service에서 받은 camelCase 객체 그대로 JSON 응답
+- 프론트엔드 (TypeScript): API 응답을 camelCase로 수신 및 타입 적용
 
 ---
 
@@ -454,37 +447,22 @@ const user = toCamelCase(userRow); // { id: '123', fullName: 'John Doe', created
 **백엔드 `.env.example` 구조:**
 
 ```env
-# 서버
-NODE_ENV=development
-PORT=3001
-
-# 데이터베이스
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=todolist_app
-DB_USER=postgres
-DB_PASSWORD=your_secure_password
+# 데이터베이스 (로컬 직접 설치 기준, Docker 미사용)
+POSTGRES_CONNECTION_STRING=postgresql://user:password@localhost:5432/dbname
 
 # JWT
 JWT_ACCESS_SECRET=your_access_token_secret_key_min_32_chars
 JWT_REFRESH_SECRET=your_refresh_token_secret_key_min_32_chars
-JWT_ACCESS_EXPIRY=15m
-JWT_REFRESH_EXPIRY=7d
 
-# 보안
-BCRYPT_ROUNDS=10
-CORS_ORIGIN=http://localhost:3000
-
-# 로깅
-LOG_LEVEL=info
+# 서버
+PORT=3000
+CORS_ORIGIN=http://localhost:5173
 ```
 
 **프론트엔드 `.env.example` 구조:**
 
 ```env
-VITE_API_BASE_URL=http://localhost:3001/api
-VITE_APP_NAME=TodoListApp
-VITE_APP_VERSION=1.0.0
+VITE_API_BASE_URL=http://localhost:3000/api
 ```
 
 **규칙:**
@@ -495,17 +473,14 @@ VITE_APP_VERSION=1.0.0
 
 **접근 패턴:**
 ```javascript
-// 백엔드
-const dbConfig = {
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '5432'),
-  database: process.env.DB_NAME || 'todolist_app',
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-};
+// 백엔드: 단일 연결 문자열로 pg.Pool 초기화
+const { Pool } = require('pg');
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_CONNECTION_STRING,
+});
 
 // 프론트엔드 (Vite)
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 ```
 
 ### 5.2 JWT 비밀키 및 토큰 설정
@@ -575,10 +550,10 @@ if (!isPasswordValid) {
 **백엔드 CORS 정책:**
 
 ```javascript
-import cors from 'cors';
+const cors = require('cors');
 
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
   credentials: false, // Cookie 미사용 (토큰은 Zustand 메모리 저장)
   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -590,14 +565,14 @@ app.use(cors(corsOptions));
 
 **규칙:**
 - 프로덕션에서는 `CORS_ORIGIN` 환경변수로 화이트리스트 지정
-- 개발 환경: `http://localhost:3000`
+- 개발 환경: `http://localhost:5173` (Vite 기본 포트)
 - `credentials: false` — 토큰은 Zustand 메모리에만 저장하므로 Cookie 불필요
 
 ### 5.5 에러 응답 표준 포맷
 
 **모든 API 응답은 아래 구조를 따른다:**
 
-```typescript
+```json
 // 성공 응답 (200)
 {
   "success": true,
@@ -823,9 +798,20 @@ frontend/
 │   │   ├── NotFoundPage.tsx          # /404
 │   │   └── index.ts
 │   │
+│   ├── i18n/                         # 다국어 설정
+│   │   ├── index.ts                  # i18next 초기화 (localStorage에서 언어 복원)
+│   │   └── locales/                  # 번역 파일
+│   │       ├── ko.json               # 한국어
+│   │       ├── en.json               # English
+│   │       ├── zh.json               # 中文
+│   │       ├── ja.json               # 日本語
+│   │       ├── es.json               # Español
+│   │       └── fr.json               # Français
+│   │
 │   ├── stores/                       # Zustand 상태 관리
 │   │   ├── authStore.ts              # 사용자 인증 상태 (토큰, 사용자 정보)
 │   │   ├── uiStore.ts                # UI 상태 (로딩, 모달, 토스트 알림)
+│   │   ├── settingsStore.ts          # 테마(light/dark) 및 언어 설정
 │   │   └── index.ts
 │   │
 │   ├── types/                        # TypeScript 공통 타입
@@ -1054,7 +1040,6 @@ backend/
 ├── .env.example                      # 환경변수 예시
 ├── .gitignore
 ├── package.json
-├── tsconfig.json (TypeScript 사용 시)
 └── README.md
 ```
 
@@ -1112,7 +1097,7 @@ modules/todos/
 │   // }
 │
 ├── todos.types.js
-│   // 타입 정의 (TypeScript 또는 JSDoc)
+│   // 타입 정의 (JSDoc @typedef)
 │   // /**
 │   //  * @typedef {Object} TodoItem
 │   //  * @property {string} id
@@ -1247,7 +1232,7 @@ repositories/
 | **원칙** | | |
 | 관심사 분리 | ✓ | 각 계층은 단일 책임을 가짐 |
 | SRP 준수 | ✓ | 함수/클래스가 변경의 이유 1개만 가짐 |
-| 인터페이스 기반 | ✓ | Type/Interface 명시적 정의 |
+| 인터페이스 기반 | ✓ | 프론트엔드: TypeScript Interface/Type, 백엔드: JSDoc @typedef |
 | 불변성 우선 | ✓ | 데이터 변경 시 새로운 객체 생성 |
 | 명시적 의존성 | ✓ | 모든 의존성이 매개변수로 전달됨 |
 | **레이어** | | |
@@ -1278,7 +1263,7 @@ repositories/
 | 에러 코드 정의 | ✓ | UNAUTHORIZED, FORBIDDEN 등 |
 | 로깅 | ✓ | 요청/응답, 에러 기록 |
 | **디렉토리** | | |
-| frontend/src 구조 | ✓ | api, components, features, hooks, pages, stores, types, utils, constants |
+| frontend/src 구조 | ✓ | api, components, features, hooks, i18n, pages, stores, types, utils, constants |
 | backend/src 구조 | ✓ | config, middlewares, modules, repositories, utils, types |
 | features vertical slicing | ✓ | auth, todos, categories, profile 각각 components, hooks, types |
 | modules 독립성 | ✓ | 각 모듈이 router, controller, service, types 포함 |
@@ -1292,11 +1277,14 @@ repositories/
   - Zustand 상태 관리
   - TanStack Query 서버 상태 관리
   - TypeScript 타입 시스템
+  - i18next 다국어 지원
+  - react-i18next React 바인딩
 
 - **백엔드 기술 스택**
-  - Node.js + Express 공식 문서
+  - Node.js + Express 공식 문서 (JavaScript, CommonJS)
   - pg (PostgreSQL 클라이언트) 사용 가이드
   - bcrypt 해싱
+  - JSDoc — 타입 문서화 (TypeScript 미사용)
   - JWT (jsonwebtoken)
 
 - **소프트웨어 설계**

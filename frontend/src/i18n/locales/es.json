@@ -1,0 +1,182 @@
+{
+  "nav": {
+    "todos": "Lista de tareas",
+    "categories": "Categorías",
+    "editProfile": "Editar perfil",
+    "logout": "Cerrar sesión"
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "add": "Agregar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "complete": "Completar",
+    "uncomplete": "Desmarcar",
+    "reset": "Restablecer",
+    "default": "Predeterminado"
+  },
+  "login": {
+    "title": "TodoList",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Ingrese contraseña",
+    "submit": "Iniciar sesión",
+    "noAccount": "¿No tienes cuenta?",
+    "signupLink": "Regístrate",
+    "error": {
+      "invalid": "Correo o contraseña incorrectos.",
+      "failed": "Error al iniciar sesión."
+    },
+    "validation": {
+      "email": "Por favor ingrese un correo válido.",
+      "password": "Por favor ingrese su contraseña."
+    }
+  },
+  "signup": {
+    "title": "Registrarse",
+    "name": "Nombre",
+    "namePlaceholder": "Ingrese su nombre",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Mínimo 8 caracteres",
+    "passwordConfirm": "Confirmar contraseña",
+    "passwordConfirmPlaceholder": "Reingrese la contraseña",
+    "submit": "Registrarse",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "loginLink": "Iniciar sesión",
+    "error": {
+      "emailConflict": "Este correo ya está en uso.",
+      "failed": "Error al registrarse."
+    },
+    "validation": {
+      "name": "Por favor ingrese su nombre.",
+      "email": "Por favor ingrese un formato de correo válido.",
+      "passwordLength": "La contraseña debe tener al menos 8 caracteres.",
+      "passwordMatch": "Las contraseñas no coinciden."
+    }
+  },
+  "todos": {
+    "title": "Lista de tareas",
+    "addBtn": "+ Agregar tarea",
+    "empty": "No hay tareas",
+    "error": "Error al cargar las tareas.",
+    "delete": {
+      "title": "Eliminar tarea",
+      "confirm": "¿Está seguro de que desea eliminar esta tarea?"
+    },
+    "dueDate": { "none": "Sin fecha límite" },
+    "sort": {
+      "createdAt": "Más recientes (predeterminado)",
+      "dueDate": "Fecha límite (más próxima)"
+    }
+  },
+  "addTodo": {
+    "title": "Agregar tarea",
+    "titleLabel": "Título",
+    "titlePlaceholder": "Ingrese el título",
+    "category": "Categoría",
+    "categoryPlaceholder": "Seleccionar categoría",
+    "description": "Descripción (opcional)",
+    "descriptionPlaceholder": "Ingrese descripción",
+    "dueDate": "Fecha límite (opcional)",
+    "confirm": "Agregar",
+    "validation": {
+      "title": "Por favor ingrese un título.",
+      "category": "Por favor seleccione una categoría."
+    }
+  },
+  "editTodo": {
+    "title": "Editar tarea",
+    "confirm": "Guardar"
+  },
+  "filter": {
+    "toggle": "Filtro",
+    "categoryAll": "Todas las categorías",
+    "completion": {
+      "all": "Todos",
+      "completed": "Completados",
+      "incomplete": "Incompletos"
+    },
+    "aria": {
+      "toggle": "Alternar filtro",
+      "startDate": "Fecha inicio",
+      "endDate": "Fecha fin",
+      "completion": "Estado de completado"
+    }
+  },
+  "categories": {
+    "title": "Gestión de categorías",
+    "addBtn": "+ Agregar categoría",
+    "empty": "No hay categorías.",
+    "error": "Error al cargar las categorías.",
+    "addModal": {
+      "title": "Agregar categoría",
+      "label": "Nombre de categoría",
+      "placeholder": "Ingrese nombre de categoría",
+      "confirm": "Agregar"
+    },
+    "deleteModal": {
+      "title": "Eliminar categoría",
+      "confirm": "¿Está seguro de que desea eliminar esta categoría?"
+    },
+    "validation": { "name": "Por favor ingrese un nombre de categoría." },
+    "aria": {
+      "editName": "Editar nombre de categoría",
+      "confirmEdit": "Confirmar edición",
+      "cancelEdit": "Cancelar edición"
+    }
+  },
+  "profile": {
+    "title": "Perfil",
+    "basicInfo": "Información básica",
+    "email": "Correo electrónico",
+    "emailHint": "(No se puede cambiar)",
+    "name": "Nombre",
+    "namePlaceholder": "Ingrese nombre",
+    "saveName": "Guardar nombre",
+    "changePassword": "Cambiar contraseña",
+    "currentPassword": "Contraseña actual",
+    "currentPasswordPlaceholder": "Ingrese contraseña actual",
+    "newPassword": "Nueva contraseña",
+    "newPasswordPlaceholder": "Mínimo 8 caracteres",
+    "confirmPassword": "Confirmar nueva contraseña",
+    "confirmPasswordPlaceholder": "Reingrese nueva contraseña",
+    "changePasswordBtn": "Cambiar contraseña",
+    "validation": {
+      "currentPassword": "Por favor ingrese su contraseña actual.",
+      "newPasswordLength": "La contraseña debe tener al menos {{count}} caracteres.",
+      "passwordMatch": "Las contraseñas no coinciden."
+    }
+  },
+  "toast": {
+    "todo": {
+      "added": "Tarea agregada exitosamente.",
+      "updated": "Tarea actualizada exitosamente.",
+      "deleted": "Tarea eliminada exitosamente.",
+      "addFailed": "Error al agregar tarea.",
+      "updateFailed": "Error al actualizar tarea.",
+      "deleteFailed": "Error al eliminar tarea."
+    },
+    "category": {
+      "added": "Categoría agregada exitosamente.",
+      "updated": "Categoría actualizada exitosamente.",
+      "deleted": "Categoría eliminada exitosamente.",
+      "addFailed": "Error al agregar categoría.",
+      "updateFailed": "Error al actualizar categoría.",
+      "deleteFailed": "Error al eliminar categoría.",
+      "deleteForbidden": "No se puede eliminar una categoría que tiene tareas."
+    },
+    "profile": {
+      "nameUpdated": "Nombre actualizado exitosamente.",
+      "nameUpdateFailed": "Error al actualizar nombre.",
+      "passwordChanged": "Contraseña cambiada exitosamente.",
+      "passwordWrong": "La contraseña actual es incorrecta.",
+      "passwordChangeFailed": "Error al cambiar contraseña."
+    }
+  },
+  "settings": {
+    "language": "Idioma",
+    "darkMode": "Modo oscuro"
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "nav": {
+    "todos": "Liste de tâches",
+    "categories": "Catégories",
+    "editProfile": "Modifier le profil",
+    "logout": "Se déconnecter"
+  },
+  "common": {
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "add": "Ajouter",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "complete": "Terminer",
+    "uncomplete": "Décocher",
+    "reset": "Réinitialiser",
+    "default": "Par défaut"
+  },
+  "login": {
+    "title": "TodoList",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "submit": "Se connecter",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "signupLink": "S'inscrire",
+    "error": {
+      "invalid": "E-mail ou mot de passe incorrect.",
+      "failed": "Échec de la connexion."
+    },
+    "validation": {
+      "email": "Veuillez entrer un e-mail valide.",
+      "password": "Veuillez entrer votre mot de passe."
+    }
+  },
+  "signup": {
+    "title": "S'inscrire",
+    "name": "Nom",
+    "namePlaceholder": "Entrez votre nom",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Au moins 8 caractères",
+    "passwordConfirm": "Confirmer le mot de passe",
+    "passwordConfirmPlaceholder": "Ressaisissez le mot de passe",
+    "submit": "S'inscrire",
+    "hasAccount": "Vous avez déjà un compte ?",
+    "loginLink": "Se connecter",
+    "error": {
+      "emailConflict": "Cet e-mail est déjà utilisé.",
+      "failed": "Échec de l'inscription."
+    },
+    "validation": {
+      "name": "Veuillez entrer votre nom.",
+      "email": "Veuillez entrer un format d'e-mail valide.",
+      "passwordLength": "Le mot de passe doit comporter au moins 8 caractères.",
+      "passwordMatch": "Les mots de passe ne correspondent pas."
+    }
+  },
+  "todos": {
+    "title": "Liste de tâches",
+    "addBtn": "+ Ajouter une tâche",
+    "empty": "Aucune tâche trouvée",
+    "error": "Échec du chargement des tâches.",
+    "delete": {
+      "title": "Supprimer la tâche",
+      "confirm": "Êtes-vous sûr de vouloir supprimer cette tâche ?"
+    },
+    "dueDate": { "none": "Pas d'échéance" },
+    "sort": {
+      "createdAt": "Plus récent (défaut)",
+      "dueDate": "Échéance (la plus proche)"
+    }
+  },
+  "addTodo": {
+    "title": "Ajouter une tâche",
+    "titleLabel": "Titre",
+    "titlePlaceholder": "Entrez le titre",
+    "category": "Catégorie",
+    "categoryPlaceholder": "Sélectionner une catégorie",
+    "description": "Description (optionnelle)",
+    "descriptionPlaceholder": "Entrez une description",
+    "dueDate": "Échéance (optionnelle)",
+    "confirm": "Ajouter",
+    "validation": {
+      "title": "Veuillez entrer un titre.",
+      "category": "Veuillez sélectionner une catégorie."
+    }
+  },
+  "editTodo": {
+    "title": "Modifier la tâche",
+    "confirm": "Enregistrer"
+  },
+  "filter": {
+    "toggle": "Filtre",
+    "categoryAll": "Toutes les catégories",
+    "completion": {
+      "all": "Tous",
+      "completed": "Terminés",
+      "incomplete": "Non terminés"
+    },
+    "aria": {
+      "toggle": "Basculer le filtre",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
+      "completion": "État d'achèvement"
+    }
+  },
+  "categories": {
+    "title": "Gestion des catégories",
+    "addBtn": "+ Ajouter une catégorie",
+    "empty": "Aucune catégorie trouvée.",
+    "error": "Échec du chargement des catégories.",
+    "addModal": {
+      "title": "Ajouter une catégorie",
+      "label": "Nom de la catégorie",
+      "placeholder": "Entrez le nom de la catégorie",
+      "confirm": "Ajouter"
+    },
+    "deleteModal": {
+      "title": "Supprimer la catégorie",
+      "confirm": "Êtes-vous sûr de vouloir supprimer cette catégorie ?"
+    },
+    "validation": { "name": "Veuillez entrer un nom de catégorie." },
+    "aria": {
+      "editName": "Modifier le nom de la catégorie",
+      "confirmEdit": "Confirmer la modification",
+      "cancelEdit": "Annuler la modification"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "basicInfo": "Informations de base",
+    "email": "E-mail",
+    "emailHint": "(Non modifiable)",
+    "name": "Nom",
+    "namePlaceholder": "Entrez votre nom",
+    "saveName": "Enregistrer le nom",
+    "changePassword": "Changer le mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "currentPasswordPlaceholder": "Entrez le mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "newPasswordPlaceholder": "Au moins 8 caractères",
+    "confirmPassword": "Confirmer le nouveau mot de passe",
+    "confirmPasswordPlaceholder": "Ressaisissez le nouveau mot de passe",
+    "changePasswordBtn": "Changer le mot de passe",
+    "validation": {
+      "currentPassword": "Veuillez entrer votre mot de passe actuel.",
+      "newPasswordLength": "Le mot de passe doit comporter au moins {{count}} caractères.",
+      "passwordMatch": "Les mots de passe ne correspondent pas."
+    }
+  },
+  "toast": {
+    "todo": {
+      "added": "Tâche ajoutée avec succès.",
+      "updated": "Tâche mise à jour avec succès.",
+      "deleted": "Tâche supprimée avec succès.",
+      "addFailed": "Échec de l'ajout de la tâche.",
+      "updateFailed": "Échec de la mise à jour de la tâche.",
+      "deleteFailed": "Échec de la suppression de la tâche."
+    },
+    "category": {
+      "added": "Catégorie ajoutée avec succès.",
+      "updated": "Catégorie mise à jour avec succès.",
+      "deleted": "Catégorie supprimée avec succès.",
+      "addFailed": "Échec de l'ajout de la catégorie.",
+      "updateFailed": "Échec de la mise à jour de la catégorie.",
+      "deleteFailed": "Échec de la suppression de la catégorie.",
+      "deleteForbidden": "Impossible de supprimer une catégorie contenant des tâches."
+    },
+    "profile": {
+      "nameUpdated": "Nom mis à jour avec succès.",
+      "nameUpdateFailed": "Échec de la mise à jour du nom.",
+      "passwordChanged": "Mot de passe changé avec succès.",
+      "passwordWrong": "Le mot de passe actuel est incorrect.",
+      "passwordChangeFailed": "Échec du changement de mot de passe."
+    }
+  },
+  "settings": {
+    "language": "Langue",
+    "darkMode": "Mode sombre"
+  }
+}

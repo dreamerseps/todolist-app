@@ -1,0 +1,36 @@
+.categories-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--space-6);
+}
+
+.categories-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+}
+
+.categories-header h1 {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.category-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.error-message {
+  color: var(--color-danger);
+  text-align: center;
+  padding: var(--space-6);
+}
+
+.empty-message {
+  text-align: center;
+  color: var(--color-text-tertiary);
+  padding: var(--space-6);
+}

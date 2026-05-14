@@ -1,0 +1,182 @@
+{
+  "nav": {
+    "todos": "タスク一覧",
+    "categories": "カテゴリ",
+    "editProfile": "プロフィール編集",
+    "logout": "ログアウト"
+  },
+  "common": {
+    "cancel": "キャンセル",
+    "save": "保存",
+    "add": "追加",
+    "delete": "削除",
+    "edit": "編集",
+    "complete": "完了",
+    "uncomplete": "完了を取り消す",
+    "reset": "リセット",
+    "default": "デフォルト"
+  },
+  "login": {
+    "title": "TodoList",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "passwordPlaceholder": "パスワードを入力",
+    "submit": "ログイン",
+    "noAccount": "アカウントをお持ちでないですか？",
+    "signupLink": "新規登録",
+    "error": {
+      "invalid": "メールアドレスまたはパスワードが間違っています。",
+      "failed": "ログインに失敗しました。"
+    },
+    "validation": {
+      "email": "有効なメールアドレスを入力してください。",
+      "password": "パスワードを入力してください。"
+    }
+  },
+  "signup": {
+    "title": "新規登録",
+    "name": "名前",
+    "namePlaceholder": "名前を入力",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "passwordPlaceholder": "8文字以上",
+    "passwordConfirm": "パスワード確認",
+    "passwordConfirmPlaceholder": "パスワードを再入力",
+    "submit": "登録",
+    "hasAccount": "すでにアカウントをお持ちですか？",
+    "loginLink": "ログイン",
+    "error": {
+      "emailConflict": "このメールアドレスは既に使用されています。",
+      "failed": "登録に失敗しました。"
+    },
+    "validation": {
+      "name": "名前を入力してください。",
+      "email": "有効なメールアドレス形式を入力してください。",
+      "passwordLength": "パスワードは8文字以上必要です。",
+      "passwordMatch": "パスワードが一致しません。"
+    }
+  },
+  "todos": {
+    "title": "タスク一覧",
+    "addBtn": "+ タスクを追加",
+    "empty": "タスクがありません",
+    "error": "タスクの読み込みに失敗しました。",
+    "delete": {
+      "title": "タスクを削除",
+      "confirm": "このタスクを削除してもよろしいですか？"
+    },
+    "dueDate": { "none": "期限なし" },
+    "sort": {
+      "createdAt": "新しい順（デフォルト）",
+      "dueDate": "期限が近い順"
+    }
+  },
+  "addTodo": {
+    "title": "タスクを追加",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "タスクのタイトルを入力",
+    "category": "カテゴリ",
+    "categoryPlaceholder": "カテゴリを選択",
+    "description": "説明（任意）",
+    "descriptionPlaceholder": "説明を入力",
+    "dueDate": "期限（任意）",
+    "confirm": "追加",
+    "validation": {
+      "title": "タイトルを入力してください。",
+      "category": "カテゴリを選択してください。"
+    }
+  },
+  "editTodo": {
+    "title": "タスクを編集",
+    "confirm": "保存"
+  },
+  "filter": {
+    "toggle": "フィルター",
+    "categoryAll": "全カテゴリ",
+    "completion": {
+      "all": "すべて",
+      "completed": "完了",
+      "incomplete": "未完了"
+    },
+    "aria": {
+      "toggle": "フィルターを切り替え",
+      "startDate": "開始日",
+      "endDate": "終了日",
+      "completion": "完了状態"
+    }
+  },
+  "categories": {
+    "title": "カテゴリ管理",
+    "addBtn": "+ カテゴリを追加",
+    "empty": "カテゴリがありません。",
+    "error": "カテゴリの読み込みに失敗しました。",
+    "addModal": {
+      "title": "カテゴリを追加",
+      "label": "カテゴリ名",
+      "placeholder": "カテゴリ名を入力",
+      "confirm": "追加"
+    },
+    "deleteModal": {
+      "title": "カテゴリを削除",
+      "confirm": "このカテゴリを削除してもよろしいですか？"
+    },
+    "validation": { "name": "カテゴリ名を入力してください。" },
+    "aria": {
+      "editName": "カテゴリ名を編集",
+      "confirmEdit": "編集を確認",
+      "cancelEdit": "編集をキャンセル"
+    }
+  },
+  "profile": {
+    "title": "プロフィール",
+    "basicInfo": "基本情報",
+    "email": "メールアドレス",
+    "emailHint": "（変更不可）",
+    "name": "名前",
+    "namePlaceholder": "名前を入力",
+    "saveName": "名前を保存",
+    "changePassword": "パスワード変更",
+    "currentPassword": "現在のパスワード",
+    "currentPasswordPlaceholder": "現在のパスワードを入力",
+    "newPassword": "新しいパスワード",
+    "newPasswordPlaceholder": "8文字以上",
+    "confirmPassword": "新しいパスワードの確認",
+    "confirmPasswordPlaceholder": "新しいパスワードを再入力",
+    "changePasswordBtn": "パスワードを変更",
+    "validation": {
+      "currentPassword": "現在のパスワードを入力してください。",
+      "newPasswordLength": "パスワードは{{count}}文字以上必要です。",
+      "passwordMatch": "パスワードが一致しません。"
+    }
+  },
+  "toast": {
+    "todo": {
+      "added": "タスクを追加しました。",
+      "updated": "タスクを更新しました。",
+      "deleted": "タスクを削除しました。",
+      "addFailed": "タスクの追加に失敗しました。",
+      "updateFailed": "タスクの更新に失敗しました。",
+      "deleteFailed": "タスクの削除に失敗しました。"
+    },
+    "category": {
+      "added": "カテゴリを追加しました。",
+      "updated": "カテゴリを更新しました。",
+      "deleted": "カテゴリを削除しました。",
+      "addFailed": "カテゴリの追加に失敗しました。",
+      "updateFailed": "カテゴリの更新に失敗しました。",
+      "deleteFailed": "カテゴリの削除に失敗しました。",
+      "deleteForbidden": "タスクが含まれるカテゴリは削除できません。"
+    },
+    "profile": {
+      "nameUpdated": "名前を更新しました。",
+      "nameUpdateFailed": "名前の更新に失敗しました。",
+      "passwordChanged": "パスワードを変更しました。",
+      "passwordWrong": "現在のパスワードが正しくありません。",
+      "passwordChangeFailed": "パスワードの変更に失敗しました。"
+    }
+  },
+  "settings": {
+    "language": "言語",
+    "darkMode": "ダークモード"
+  }
+}

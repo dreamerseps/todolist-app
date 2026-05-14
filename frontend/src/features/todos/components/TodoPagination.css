@@ -1,0 +1,20 @@
+.todo-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem 0;
+}
+
+.todo-pagination-info {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  min-width: 5rem;
+  text-align: center;
+}
+
+.todo-pagination-info strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}

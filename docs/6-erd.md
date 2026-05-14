@@ -11,6 +11,8 @@
 | 버전 | 날짜 | 작성자 | 변경 내용 |
 |------|------|--------|----------|
 | 1.0 | 2026-05-13 | yoseb lee | 최초 작성 — 3개 엔티티(USER, CATEGORY, TODO) ERD, 관계 정의, 비즈니스 규칙 반영 |
+| 1.1 | 2026-05-13 | yoseb lee | schema.sql 정합성 반영 — 인덱스명 실제 DDL 기준으로 수정, 누락된 idx_todos_due_date 추가, categories.user_id ON DELETE CASCADE 명시, 시드 멱등성 방식 업데이트 |
+| 1.2 | 2026-05-14 | yoseb lee | todos.due_date 타입 변경 — DATE → TIMESTAMP (시간 포함), 타입 선택 사유 테이블 반영 |
 
 ---
 
@@ -46,7 +48,7 @@ erDiagram
         UUID category_id FK "필수"
         VARCHAR(255) title
         TEXT description
-        DATE due_date
+        TIMESTAMP due_date
         BOOLEAN is_completed "기본값: false"
         TIMESTAMP created_at
         TIMESTAMP updated_at
@@ -108,7 +110,7 @@ erDiagram
 | category_id | UUID | FK → CATEGORY.id, NOT NULL | 할일 분류 카테고리 |
 | title | VARCHAR(255) | NOT NULL | 할일 제목 |
 | description | TEXT | NULL | 할일 상세 설명 |
-| due_date | DATE | NULL | 종료 예정일 |
+| due_date | TIMESTAMP | NULL | 종료 예정일 (시간 포함) |
 | is_completed | BOOLEAN | NOT NULL, DEFAULT false | 완료 여부 (true=완료, false=미완료) |
 | created_at | TIMESTAMP | NOT NULL, DEFAULT NOW() | 할일 등록 일시 |
 | updated_at | TIMESTAMP | NOT NULL, DEFAULT NOW() | 할일 수정 일시 |
@@ -241,19 +243,22 @@ erDiagram
 | category_name | VARCHAR(100) | 사용자 친화적 길이 |
 | title | VARCHAR(255) | 할일 제목 적절 길이 |
 | description | TEXT | 상세 설명 용량 무제한 |
-| due_date | DATE | 날짜만 필요(시간 불필요) |
+| due_date | TIMESTAMP | 시간 포함 종료 예정일 (날짜+시간 저장) |
 | is_completed | BOOLEAN | 이진 상태 표현 |
 | timestamp | TIMESTAMP | 감사추적(audit trail)용 정밀도 |
 
-### 5.3 인덱스 설계 (권장)
+### 5.3 인덱스 설계
+
+> 아래 인덱스명은 `database/schema.sql` DDL과 일치한다.
 
 | 테이블 | 컬럼 | 인덱스명 | 사유 |
 |--------|------|---------|------|
-| USER | email | idx_user_email | 로그인 쿼리 성능 |
-| CATEGORY | user_id | idx_category_user_id | 사용자별 카테고리 조회 |
-| TODO | user_id | idx_todo_user_id | 사용자별 할일 조회 |
-| TODO | category_id | idx_todo_category_id | 카테고리 삭제 시 할일 개수 확인 |
-| TODO | user_id, category_id | idx_todo_user_category | 필터링 복합 쿼리 최적화 |
+| users | email | idx_users_email | 로그인 쿼리 성능 |
+| categories | user_id | idx_categories_user_id | 사용자별 카테고리 조회 |
+| todos | user_id | idx_todos_user_id | 사용자별 할일 조회 |
+| todos | category_id | idx_todos_category_id | 카테고리 삭제 시 할일 개수 확인 (BR-08) |
+| todos | user_id, category_id | idx_todos_user_category | 필터링 복합 쿼리 최적화 (BR-06) |
+| todos | user_id, due_date | idx_todos_due_date | 마감일 정렬 및 기간 필터 최적화 (BR-06) |
 
 ---
 
@@ -261,21 +266,27 @@ erDiagram
 
 ### 6.1 Referential Integrity (참조 무결성)
 
+> 아래 SQL은 schema.sql DDL의 외래키 구조를 문서화한 것이다.
+
 ```sql
--- CATEGORY 테이블
-ALTER TABLE CATEGORY
-ADD CONSTRAINT fk_category_user_id
-FOREIGN KEY (user_id) REFERENCES USER(id);
+-- categories 테이블
+-- 사용자 삭제 시 해당 사용자의 사용자 정의 카테고리도 자동 삭제
+ALTER TABLE categories
+ADD CONSTRAINT fk_categories_user_id
+FOREIGN KEY (user_id) REFERENCES users(id)
+ON DELETE CASCADE;
 
--- TODO 테이블
-ALTER TABLE TODO
-ADD CONSTRAINT fk_todo_user_id
-FOREIGN KEY (user_id) REFERENCES USER(id)
-ON DELETE CASCADE;  -- 사용자 삭제 시 할일 자동 삭제
+-- todos 테이블
+-- 사용자 삭제 시 해당 사용자의 할일 전체 자동 삭제
+ALTER TABLE todos
+ADD CONSTRAINT fk_todos_user_id
+FOREIGN KEY (user_id) REFERENCES users(id)
+ON DELETE CASCADE;
 
-ALTER TABLE TODO
-ADD CONSTRAINT fk_todo_category_id
-FOREIGN KEY (category_id) REFERENCES CATEGORY(id);
+-- 카테고리 삭제 시 할일은 삭제하지 않음 (BR-08: 할일이 있으면 카테고리 삭제 불가)
+ALTER TABLE todos
+ADD CONSTRAINT fk_todos_category_id
+FOREIGN KEY (category_id) REFERENCES categories(id);
 ```
 
 ### 6.2 Cascade Delete 정책
@@ -294,11 +305,13 @@ FOREIGN KEY (category_id) REFERENCES CATEGORY(id);
 
 ```sql
 -- 기본 카테고리 생성 (모든 사용자가 공유)
-INSERT INTO CATEGORY (id, user_id, name, is_default)
-VALUES
-  (uuid_generate_v4(), NULL, '업무', true),
-  (uuid_generate_v4(), NULL, '개인', true),
-  (uuid_generate_v4(), NULL, '기타', true);
+-- WHERE NOT EXISTS로 멱등성 보장 — database/seed.sql 참조
+INSERT INTO categories (name, is_default, user_id)
+SELECT v.name, true, NULL
+FROM (VALUES ('업무'), ('개인'), ('기타')) AS v(name)
+WHERE NOT EXISTS (
+  SELECT 1 FROM categories WHERE is_default = true AND name = v.name
+);
 ```
 
 ---

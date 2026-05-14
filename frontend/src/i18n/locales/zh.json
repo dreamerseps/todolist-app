@@ -1,0 +1,182 @@
+{
+  "nav": {
+    "todos": "待办事项",
+    "categories": "分类",
+    "editProfile": "编辑资料",
+    "logout": "退出登录"
+  },
+  "common": {
+    "cancel": "取消",
+    "save": "保存",
+    "add": "添加",
+    "delete": "删除",
+    "edit": "编辑",
+    "complete": "完成",
+    "uncomplete": "取消完成",
+    "reset": "重置",
+    "default": "默认"
+  },
+  "login": {
+    "title": "TodoList",
+    "email": "邮箱",
+    "password": "密码",
+    "passwordPlaceholder": "请输入密码",
+    "submit": "登录",
+    "noAccount": "还没有账号？",
+    "signupLink": "立即注册",
+    "error": {
+      "invalid": "邮箱或密码不正确。",
+      "failed": "登录失败。"
+    },
+    "validation": {
+      "email": "请输入有效的邮箱地址。",
+      "password": "请输入密码。"
+    }
+  },
+  "signup": {
+    "title": "注册",
+    "name": "姓名",
+    "namePlaceholder": "请输入姓名",
+    "email": "邮箱",
+    "password": "密码",
+    "passwordPlaceholder": "至少8个字符",
+    "passwordConfirm": "确认密码",
+    "passwordConfirmPlaceholder": "请再次输入密码",
+    "submit": "注册",
+    "hasAccount": "已有账号？",
+    "loginLink": "立即登录",
+    "error": {
+      "emailConflict": "该邮箱已被使用。",
+      "failed": "注册失败。"
+    },
+    "validation": {
+      "name": "请输入姓名。",
+      "email": "请输入有效的邮箱格式。",
+      "passwordLength": "密码至少需要8个字符。",
+      "passwordMatch": "两次密码不一致。"
+    }
+  },
+  "todos": {
+    "title": "待办事项",
+    "addBtn": "+ 添加待办",
+    "empty": "暂无待办事项",
+    "error": "加载待办事项失败。",
+    "delete": {
+      "title": "删除待办",
+      "confirm": "确定要删除这条待办事项吗？"
+    },
+    "dueDate": { "none": "无截止日期" },
+    "sort": {
+      "createdAt": "最新（默认）",
+      "dueDate": "截止日期（最早）"
+    }
+  },
+  "addTodo": {
+    "title": "添加待办",
+    "titleLabel": "标题",
+    "titlePlaceholder": "请输入待办标题",
+    "category": "分类",
+    "categoryPlaceholder": "选择分类",
+    "description": "描述（可选）",
+    "descriptionPlaceholder": "请输入描述",
+    "dueDate": "截止日期（可选）",
+    "confirm": "添加",
+    "validation": {
+      "title": "请输入标题。",
+      "category": "请选择分类。"
+    }
+  },
+  "editTodo": {
+    "title": "编辑待办",
+    "confirm": "保存"
+  },
+  "filter": {
+    "toggle": "筛选",
+    "categoryAll": "全部分类",
+    "completion": {
+      "all": "全部",
+      "completed": "已完成",
+      "incomplete": "未完成"
+    },
+    "aria": {
+      "toggle": "切换筛选",
+      "startDate": "开始日期",
+      "endDate": "结束日期",
+      "completion": "完成状态"
+    }
+  },
+  "categories": {
+    "title": "分类管理",
+    "addBtn": "+ 添加分类",
+    "empty": "暂无分类。",
+    "error": "加载分类失败。",
+    "addModal": {
+      "title": "添加分类",
+      "label": "分类名称",
+      "placeholder": "请输入分类名称",
+      "confirm": "添加"
+    },
+    "deleteModal": {
+      "title": "删除分类",
+      "confirm": "确定要删除这个分类吗？"
+    },
+    "validation": { "name": "请输入分类名称。" },
+    "aria": {
+      "editName": "编辑分类名称",
+      "confirmEdit": "确认编辑",
+      "cancelEdit": "取消编辑"
+    }
+  },
+  "profile": {
+    "title": "个人资料",
+    "basicInfo": "基本信息",
+    "email": "邮箱",
+    "emailHint": "（不可修改）",
+    "name": "姓名",
+    "namePlaceholder": "请输入姓名",
+    "saveName": "保存姓名",
+    "changePassword": "修改密码",
+    "currentPassword": "当前密码",
+    "currentPasswordPlaceholder": "请输入当前密码",
+    "newPassword": "新密码",
+    "newPasswordPlaceholder": "至少8个字符",
+    "confirmPassword": "确认新密码",
+    "confirmPasswordPlaceholder": "请再次输入新密码",
+    "changePasswordBtn": "修改密码",
+    "validation": {
+      "currentPassword": "请输入当前密码。",
+      "newPasswordLength": "密码至少需要{{count}}个字符。",
+      "passwordMatch": "两次密码不一致。"
+    }
+  },
+  "toast": {
+    "todo": {
+      "added": "待办事项已添加。",
+      "updated": "待办事项已更新。",
+      "deleted": "待办事项已删除。",
+      "addFailed": "添加待办事项失败。",
+      "updateFailed": "更新待办事项失败。",
+      "deleteFailed": "删除待办事项失败。"
+    },
+    "category": {
+      "added": "分类已添加。",
+      "updated": "分类已更新。",
+      "deleted": "分类已删除。",
+      "addFailed": "添加分类失败。",
+      "updateFailed": "更新分类失败。",
+      "deleteFailed": "删除分类失败。",
+      "deleteForbidden": "无法删除包含待办事项的分类。"
+    },
+    "profile": {
+      "nameUpdated": "姓名已更新。",
+      "nameUpdateFailed": "更新姓名失败。",
+      "passwordChanged": "密码已修改。",
+      "passwordWrong": "当前密码不正确。",
+      "passwordChangeFailed": "修改密码失败。"
+    }
+  },
+  "settings": {
+    "language": "语言",
+    "darkMode": "深色模式"
+  }
+}

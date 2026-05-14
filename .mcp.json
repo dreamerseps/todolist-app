@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+
+    "_comment": "//  E2E Test 를 수행할 때 시나리오대로 화면을 띄워 수행하는 역할, 디버깅기능은 없음",
+
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"]
+    },
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp"
+    },
+    "postgresql-mcp": {
+      "command": "npx",
+      "args": ["-y", "@henkey/postgres-mcp-server"]
+    }
+  }
+}
