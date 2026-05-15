@@ -17,7 +17,7 @@ type EditTodoModalProps = {
 function toDatetimeLocal(value: string | null): string {
   if (!value) return '';
   if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return `${value}T00:00`;
-  return value.slice(0, 16);
+  return value.slice(0, 16).replace(' ', 'T');
 }
 
 export default function EditTodoModal({ todo, categories, onConfirm, onCancel, isLoading }: EditTodoModalProps) {

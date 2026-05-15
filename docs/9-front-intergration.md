@@ -12,6 +12,7 @@
 | 1.1 | 2026-05-14 | yoseb lee | 구현 코드 기준 업데이트 — axios interceptor 실제 변환 방향 명시, 페이지네이션 응답 구조 수정(`pagination` → flat 필드), authStore `setUser` 액션 추가, 토큰 갱신 요청 본문 snake_case 유지 명시 |
 | 1.2 | 2026-05-14 | yoseb lee | 추가 구현 반영 — settingsStore(theme/language) 인터페이스 추가, i18n 초기화 방법 및 useTranslation 사용 패턴 추가 |
 | 1.3 | 2026-05-15 | yoseb lee | 일괄 삭제 API 추가 — `DELETE /api/todos/bulk` 엔드포인트, `todosApi.bulkDelete`, `useBulkDeleteTodo` 훅 |
+| 1.4 | 2026-05-15 | yoseb lee | 마감 일시 시간 지원 — `due_date` DB 타입 `DATE` → `TIMESTAMP`, pg 타입 파서 설정(문자열 반환), 프론트엔드 `datetime-local` 입력 적용 |
 
 ---
 
@@ -109,7 +110,7 @@ export type TodoItem = {
   category_id: string;
   title: string;
   description: string | null;
-  due_date: string | null;  // ISO 8601 datetime (TIMESTAMP)
+  due_date: string | null;  // PostgreSQL TIMESTAMP 문자열 "YYYY-MM-DD HH:MM:SS" (타임존 변환 없음)
   is_completed: boolean;
   created_at: string;
   updated_at: string;
@@ -118,7 +119,7 @@ export type TodoItem = {
 export type TodoFilter = {
   category_id?: string;
   from?: string;          // YYYY-MM-DD
-  to?: string;            // YYYY-MM-DD, from <= to 이어야 함
+  to?: string;            // YYYY-MM-DD, from <= to 이어야 함 (해당 날짜 하루 전체 포함)
   is_completed?: boolean;
   sort?: 'created_at' | 'due_date';
   page?: number;
@@ -129,14 +130,14 @@ export type TodoCreateRequest = {
   title: string;
   category_id: string;
   description?: string;
-  due_date?: string;
+  due_date?: string;  // datetime-local 입력값 "YYYY-MM-DDTHH:MM"
 };
 
 export type TodoUpdateRequest = {
   title?: string;
   description?: string | null;
   category_id?: string;
-  due_date?: string | null;
+  due_date?: string | null;  // datetime-local 입력값 "YYYY-MM-DDTHH:MM" 또는 null
   is_completed?: boolean;
 };
 
@@ -292,6 +293,26 @@ apiClient.interceptors.response.use(
 
 export default apiClient;
 ```
+
+---
+
+## 5-1. 백엔드 pg 타입 파서 설정
+
+`backend/src/config/database.js`에서 PostgreSQL `TIMESTAMP WITHOUT TIME ZONE` 컬럼을 **JavaScript `Date` 객체로 변환하지 않고 문자열 그대로** 반환하도록 설정한다.
+
+```javascript
+const { Pool, types } = require('pg');
+
+// TIMESTAMP WITHOUT TIME ZONE(OID 1114)을 문자열로 반환
+// 기본 동작(Date 객체 변환) 시 서버 로컬 타임존이 적용되어 저장 시각과 표시 시각이 달라지는 문제 방지
+types.setTypeParser(1114, (val) => val);
+```
+
+**반환 형식:** `"YYYY-MM-DD HH:MM:SS"` (공백 구분자, 타임존 없음)
+
+**프론트엔드 처리 방식:**
+- `TodoItem.due_date` 표시: `formatDueDate()` 함수가 `value.slice(0, 10)`(날짜)과 `value.slice(11, 16)`(시간)을 직접 슬라이싱하여 `"YYYY-MM-DD HH:MM"` 형태로 출력
+- `EditTodoModal` 초기값: `toDatetimeLocal()` 함수가 공백을 `T`로 교체 → `"YYYY-MM-DDTHH:MM"` (datetime-local 입력 호환)
 
 ---
 

@@ -38,7 +38,7 @@ function buildFilter(userId, { categoryId, from, to, isCompleted } = {}) {
 
   if (categoryId != null) { conds.push(`t.category_id = $${idx++}`); params.push(categoryId); }
   if (from != null)        { conds.push(`t.due_date >= $${idx++}`);   params.push(from); }
-  if (to != null)          { conds.push(`t.due_date <= $${idx++}`);   params.push(to); }
+  if (to != null)          { conds.push(`DATE(t.due_date) <= $${idx++}::date`); params.push(to); }
   if (isCompleted != null) { conds.push(`t.is_completed = $${idx++}`); params.push(isCompleted); }
 
   return { where: conds.join(' AND '), params, idx };

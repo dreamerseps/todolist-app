@@ -55,7 +55,7 @@ CREATE TABLE todos (
     category_id  UUID         NOT NULL REFERENCES categories(id),   -- BR-05: 카테고리 필수
     title        VARCHAR(255) NOT NULL,
     description  TEXT         NULL,
-    due_date     DATE         NULL,
+    due_date     TIMESTAMP    NULL,
     is_completed BOOLEAN      NOT NULL DEFAULT false,
     created_at   TIMESTAMP    NOT NULL DEFAULT NOW(),
     updated_at   TIMESTAMP    NOT NULL DEFAULT NOW()
