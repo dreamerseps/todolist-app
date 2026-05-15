@@ -59,4 +59,9 @@ async function remove(id, userId) {
   if (!deleted) throw new NotFoundError('할일을 찾을 수 없습니다');
 }
 
-module.exports = { getAll, getById, create, update, remove };
+async function removeMany(ids, userId) {
+  if (!Array.isArray(ids) || ids.length === 0) return 0;
+  return todoRepository.deleteManyByIds(ids, userId);
+}
+
+module.exports = { getAll, getById, create, update, remove, removeMany };

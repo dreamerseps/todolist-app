@@ -11,6 +11,7 @@
 | 1.0 | 2026-05-14 | yoseb lee | 최초 작성 |
 | 1.1 | 2026-05-14 | yoseb lee | 구현 코드 기준 업데이트 — axios interceptor 실제 변환 방향 명시, 페이지네이션 응답 구조 수정(`pagination` → flat 필드), authStore `setUser` 액션 추가, 토큰 갱신 요청 본문 snake_case 유지 명시 |
 | 1.2 | 2026-05-14 | yoseb lee | 추가 구현 반영 — settingsStore(theme/language) 인터페이스 추가, i18n 초기화 방법 및 useTranslation 사용 패턴 추가 |
+| 1.3 | 2026-05-15 | yoseb lee | 일괄 삭제 API 추가 — `DELETE /api/todos/bulk` 엔드포인트, `todosApi.bulkDelete`, `useBulkDeleteTodo` 훅 |
 
 ---
 
@@ -386,6 +387,9 @@ export const todosApi = {
 
   delete: (id: string) =>
     apiClient.delete<ApiResponse>(`/todos/${id}`),
+
+  bulkDelete: (ids: string[]) =>
+    apiClient.delete<ApiResponse<{ count: number }>>('/todos/bulk', { data: { ids } }),
 };
 ```
 
@@ -563,6 +567,31 @@ export function useUpdateTodo(id: string) {
 }
 ```
 
+```typescript
+// features/todos/hooks/useBulkDeleteTodo.ts
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { todosApi } from '@/api/todos.api';
+import { useUiStore } from '@/stores/uiStore';
+
+export function useBulkDeleteTodo() {
+  const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const showToast = useUiStore((s) => s.showToast);
+
+  return useMutation({
+    mutationFn: (ids: string[]) => todosApi.bulkDelete(ids),
+    onSuccess: (_, ids) => {
+      queryClient.invalidateQueries({ queryKey: ['todos'] });
+      showToast('success', t('toast.todo.bulkDeleted', { count: ids.length }));
+    },
+    onError: () => {
+      showToast('error', t('toast.todo.bulkDeleteFailed'));
+    },
+  });
+}
+```
+
 ---
 
 ## 8. 엔드포인트 요약
@@ -600,7 +629,8 @@ export function useUpdateTodo(id: string) {
 | POST | `/api/todos` | ✓ | 할일 등록 (`category_id` 필수 BR-05) |
 | GET | `/api/todos/:id` | ✓ | 할일 단건 조회 |
 | PATCH | `/api/todos/:id` | ✓ | 할일 부분 수정 (`is_completed`로 완료 토글) |
-| DELETE | `/api/todos/:id` | ✓ | 할일 삭제 |
+| DELETE | `/api/todos/:id` | ✓ | 할일 단건 삭제 |
+| DELETE | `/api/todos/bulk` | ✓ | 할일 일괄 삭제 (body: `{ ids: string[] }`) |
 
 ### 8.5 기타
 

@@ -28,7 +28,8 @@ export default function SignupPage() {
     if (!name) newErrors.name = t('signup.validation.name');
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       newErrors.email = t('signup.validation.email');
-    if (password.length < 8) newErrors.password = t('signup.validation.passwordLength');
+    if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password) || !/[^A-Za-z0-9]/.test(password))
+      newErrors.password = t('signup.validation.passwordLength');
     if (password !== passwordConfirm) newErrors.passwordConfirm = t('signup.validation.passwordMatch');
     return newErrors;
   }

@@ -15,6 +15,7 @@ import { useTodoFilter } from '@/features/todos/hooks/useTodoFilter';
 import { useAddTodo } from '@/features/todos/hooks/useAddTodo';
 import { useUpdateTodo } from '@/features/todos/hooks/useUpdateTodo';
 import { useDeleteTodo } from '@/features/todos/hooks/useDeleteTodo';
+import { useBulkDeleteTodo } from '@/features/todos/hooks/useBulkDeleteTodo';
 import { useFetchCategories } from '@/features/categories/hooks/useFetchCategories';
 import type { TodoItem } from '@/types';
 import './TodosPage.css';
@@ -28,10 +29,13 @@ export default function TodosPage() {
   const addTodo = useAddTodo();
   const updateTodo = useUpdateTodo();
   const deleteTodo = useDeleteTodo();
+  const bulkDeleteTodo = useBulkDeleteTodo();
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingTodo, setEditingTodo] = useState<TodoItem | null>(null);
   const [deletingTodoId, setDeletingTodoId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [showBulkDeleteModal, setShowBulkDeleteModal] = useState(false);
 
   const todos = data?.todos ?? [];
   const pagination = data?.pagination;
@@ -55,6 +59,29 @@ export default function TodosPage() {
   function handleDeleteConfirm() {
     if (!deletingTodoId) return;
     deleteTodo.mutate(deletingTodoId, { onSuccess: () => setDeletingTodoId(null) });
+  }
+
+  function handleToggleSelect(id: string) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  function handleSelectAll(checked: boolean) {
+    setSelectedIds(checked ? new Set(todos.map((t) => t.id)) : new Set());
+  }
+
+  function handleBulkDeleteConfirm() {
+    const ids = Array.from(selectedIds);
+    bulkDeleteTodo.mutate(ids, {
+      onSuccess: () => {
+        setSelectedIds(new Set());
+        setShowBulkDeleteModal(false);
+      },
+    });
   }
 
   return (
@@ -93,13 +120,32 @@ export default function TodosPage() {
         )}
 
         {todos.length > 0 && (
-          <TodoList
-            todos={todos}
-            categories={categories}
-            onToggle={handleToggle}
-            onEdit={(todo) => setEditingTodo(todo)}
-            onDelete={(id) => setDeletingTodoId(id)}
-          />
+          <>
+            <div className="bulk-toolbar">
+              <label className="bulk-select-all">
+                <input
+                  type="checkbox"
+                  checked={selectedIds.size === todos.length && todos.length > 0}
+                  onChange={(e) => handleSelectAll(e.target.checked)}
+                />
+                {t('todos.selectAll')}
+              </label>
+              {selectedIds.size > 0 && (
+                <Button variant="secondary" onClick={() => setShowBulkDeleteModal(true)}>
+                  {t('todos.deleteSelected', { count: selectedIds.size })}
+                </Button>
+              )}
+            </div>
+            <TodoList
+              todos={todos}
+              categories={categories}
+              onToggle={handleToggle}
+              onEdit={(todo) => setEditingTodo(todo)}
+              onDelete={(id) => setDeletingTodoId(id)}
+              selectedIds={selectedIds}
+              onToggleSelect={handleToggleSelect}
+            />
+          </>
         )}
 
         {pagination && (
@@ -138,6 +184,17 @@ export default function TodosPage() {
           isLoading={deleteTodo.isPending}
         >
           <p>{t('todos.delete.confirm')}</p>
+        </Modal>
+      )}
+
+      {showBulkDeleteModal && (
+        <Modal
+          title={t('todos.bulkDelete.title')}
+          onConfirm={handleBulkDeleteConfirm}
+          onCancel={() => setShowBulkDeleteModal(false)}
+          isLoading={bulkDeleteTodo.isPending}
+        >
+          <p>{t('todos.bulkDelete.confirm', { count: selectedIds.size })}</p>
         </Modal>
       )}
     </>

@@ -52,7 +52,7 @@
     "validation": {
       "name": "Veuillez entrer votre nom.",
       "email": "Veuillez entrer un format d'e-mail valide.",
-      "passwordLength": "Le mot de passe doit comporter au moins 8 caractères.",
+      "passwordLength": "Le mot de passe doit comporter au moins 8 caractères et inclure des majuscules, minuscules, chiffres et caractères spéciaux.",
       "passwordMatch": "Les mots de passe ne correspondent pas."
     }
   },
@@ -61,9 +61,16 @@
     "addBtn": "+ Ajouter une tâche",
     "empty": "Aucune tâche trouvée",
     "error": "Échec du chargement des tâches.",
+    "select": "Sélectionner",
+    "selectAll": "Tout sélectionner",
+    "deleteSelected": "Supprimer la sélection ({{count}})",
     "delete": {
       "title": "Supprimer la tâche",
       "confirm": "Êtes-vous sûr de vouloir supprimer cette tâche ?"
+    },
+    "bulkDelete": {
+      "title": "Supprimer la sélection",
+      "confirm": "Êtes-vous sûr de vouloir supprimer {{count}} tâches sélectionnées ?"
     },
     "dueDate": { "none": "Pas d'échéance" },
     "sort": {
@@ -156,7 +163,9 @@
       "deleted": "Tâche supprimée avec succès.",
       "addFailed": "Échec de l'ajout de la tâche.",
       "updateFailed": "Échec de la mise à jour de la tâche.",
-      "deleteFailed": "Échec de la suppression de la tâche."
+      "deleteFailed": "Échec de la suppression de la tâche.",
+      "bulkDeleted": "{{count}} tâches supprimées avec succès.",
+      "bulkDeleteFailed": "Échec de la suppression en lot."
     },
     "category": {
       "added": "Catégorie ajoutée avec succès.",

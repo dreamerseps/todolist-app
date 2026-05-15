@@ -91,4 +91,18 @@ async function remove(req, res, next) {
   }
 }
 
-module.exports = { getAll, getById, create, update, remove };
+async function removeMany(req, res, next) {
+  try {
+    const { ids } = req.body;
+    if (!Array.isArray(ids) || ids.length === 0) {
+      throw new BadRequestError('ids는 비어있지 않은 배열이어야 합니다');
+    }
+    const count = await todosService.removeMany(ids, req.user.id);
+    console.log(`[Todos] 일괄 삭제 - userId: ${req.user.id}, count: ${count}`);
+    res.json({ success: true, data: { count } });
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { getAll, getById, create, update, remove, removeMany };

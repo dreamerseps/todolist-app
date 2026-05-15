@@ -8,6 +8,8 @@ type TodoListProps = {
   onToggle?: (id: string, isCompleted: boolean) => void;
   onEdit?: (todo: TodoItemType) => void;
   onDelete?: (id: string) => void;
+  selectedIds?: Set<string>;
+  onToggleSelect?: (id: string) => void;
 };
 
 export default function TodoList({
@@ -16,6 +18,8 @@ export default function TodoList({
   onToggle,
   onEdit,
   onDelete,
+  selectedIds,
+  onToggleSelect,
 }: TodoListProps) {
   return (
     <div className="todo-list">
@@ -31,6 +35,8 @@ export default function TodoList({
             onToggle={onToggle}
             onEdit={onEdit}
             onDelete={onDelete}
+            isSelected={selectedIds?.has(todo.id)}
+            onToggleSelect={onToggleSelect}
           />
         );
       })}

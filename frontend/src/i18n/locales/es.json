@@ -52,7 +52,7 @@
     "validation": {
       "name": "Por favor ingrese su nombre.",
       "email": "Por favor ingrese un formato de correo válido.",
-      "passwordLength": "La contraseña debe tener al menos 8 caracteres.",
+      "passwordLength": "La contraseña debe tener al menos 8 caracteres e incluir mayúsculas, minúsculas, número y carácter especial.",
       "passwordMatch": "Las contraseñas no coinciden."
     }
   },
@@ -61,9 +61,16 @@
     "addBtn": "+ Agregar tarea",
     "empty": "No hay tareas",
     "error": "Error al cargar las tareas.",
+    "select": "Seleccionar",
+    "selectAll": "Seleccionar todo",
+    "deleteSelected": "Eliminar seleccionados ({{count}})",
     "delete": {
       "title": "Eliminar tarea",
       "confirm": "¿Está seguro de que desea eliminar esta tarea?"
+    },
+    "bulkDelete": {
+      "title": "Eliminar seleccionados",
+      "confirm": "¿Está seguro de que desea eliminar {{count}} tareas seleccionadas?"
     },
     "dueDate": { "none": "Sin fecha límite" },
     "sort": {
@@ -156,7 +163,9 @@
       "deleted": "Tarea eliminada exitosamente.",
       "addFailed": "Error al agregar tarea.",
       "updateFailed": "Error al actualizar tarea.",
-      "deleteFailed": "Error al eliminar tarea."
+      "deleteFailed": "Error al eliminar tarea.",
+      "bulkDeleted": "{{count}} tareas eliminadas exitosamente.",
+      "bulkDeleteFailed": "Error al eliminar tareas en lote."
     },
     "category": {
       "added": "Categoría agregada exitosamente.",

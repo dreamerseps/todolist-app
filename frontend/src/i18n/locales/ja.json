@@ -52,7 +52,7 @@
     "validation": {
       "name": "名前を入力してください。",
       "email": "有効なメールアドレス形式を入力してください。",
-      "passwordLength": "パスワードは8文字以上必要です。",
+      "passwordLength": "パスワードは8文字以上で、大文字・小文字・数字・特殊文字を含む必要があります。",
       "passwordMatch": "パスワードが一致しません。"
     }
   },
@@ -61,9 +61,16 @@
     "addBtn": "+ タスクを追加",
     "empty": "タスクがありません",
     "error": "タスクの読み込みに失敗しました。",
+    "select": "選択",
+    "selectAll": "全て選択",
+    "deleteSelected": "選択削除 ({{count}}件)",
     "delete": {
       "title": "タスクを削除",
       "confirm": "このタスクを削除してもよろしいですか？"
+    },
+    "bulkDelete": {
+      "title": "選択削除",
+      "confirm": "選択した{{count}}件のタスクを削除しますか？"
     },
     "dueDate": { "none": "期限なし" },
     "sort": {
@@ -156,7 +163,9 @@
       "deleted": "タスクを削除しました。",
       "addFailed": "タスクの追加に失敗しました。",
       "updateFailed": "タスクの更新に失敗しました。",
-      "deleteFailed": "タスクの削除に失敗しました。"
+      "deleteFailed": "タスクの削除に失敗しました。",
+      "bulkDeleted": "{{count}}件のタスクを削除しました。",
+      "bulkDeleteFailed": "一括削除に失敗しました。"
     },
     "category": {
       "added": "カテゴリを追加しました。",

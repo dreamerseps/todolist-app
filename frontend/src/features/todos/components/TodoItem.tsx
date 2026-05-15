@@ -18,6 +18,8 @@ type TodoItemProps = {
   onToggle?: (id: string, isCompleted: boolean) => void;
   onEdit?: (todo: TodoItemType) => void;
   onDelete?: (id: string) => void;
+  isSelected?: boolean;
+  onToggleSelect?: (id: string) => void;
 };
 
 export default function TodoItem({
@@ -27,6 +29,8 @@ export default function TodoItem({
   onToggle,
   onEdit,
   onDelete,
+  isSelected,
+  onToggleSelect,
 }: TodoItemProps) {
   const { t } = useTranslation();
 
@@ -36,7 +40,16 @@ export default function TodoItem({
       : 'category-badge category-badge-1';
 
   return (
-    <div className={`todo-item${todo.is_completed ? ' completed' : ''}`}>
+    <div className={`todo-item${todo.is_completed ? ' completed' : ''}${isSelected ? ' selected' : ''}`}>
+      {onToggleSelect !== undefined && (
+        <input
+          type="checkbox"
+          className="todo-select-checkbox"
+          checked={isSelected ?? false}
+          onChange={() => onToggleSelect(todo.id)}
+          aria-label={t('todos.select')}
+        />
+      )}
       <button
         className={`todo-checkbox${todo.is_completed ? ' checked' : ''}`}
         onClick={() => onToggle?.(todo.id, !todo.is_completed)}

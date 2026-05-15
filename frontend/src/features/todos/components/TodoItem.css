@@ -7,6 +7,18 @@
   border-bottom: 1px solid var(--color-border);
 }
 
+.todo-item.selected {
+  background: var(--color-primary-light);
+}
+
+.todo-select-checkbox {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: var(--color-primary);
+}
+
 .todo-item:last-child {
   border-bottom: none;
 }

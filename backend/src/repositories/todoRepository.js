@@ -139,4 +139,13 @@ async function deleteById(id, userId) {
   return rowCount > 0;
 }
 
-module.exports = { findAllByUserId, countByUserId, findByIdOnly, findById, create, update, deleteById };
+async function deleteManyByIds(ids, userId) {
+  if (ids.length === 0) return 0;
+  const { rowCount } = await pool.query(
+    'DELETE FROM todos WHERE id = ANY($1::uuid[]) AND user_id = $2',
+    [ids, userId]
+  );
+  return rowCount;
+}
+
+module.exports = { findAllByUserId, countByUserId, findByIdOnly, findById, create, update, deleteById, deleteManyByIds };

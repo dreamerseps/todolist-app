@@ -52,7 +52,7 @@
     "validation": {
       "name": "请输入姓名。",
       "email": "请输入有效的邮箱格式。",
-      "passwordLength": "密码至少需要8个字符。",
+      "passwordLength": "密码至少需要8个字符，并包含大小写字母、数字和特殊字符。",
       "passwordMatch": "两次密码不一致。"
     }
   },
@@ -61,9 +61,16 @@
     "addBtn": "+ 添加待办",
     "empty": "暂无待办事项",
     "error": "加载待办事项失败。",
+    "select": "选择",
+    "selectAll": "全选",
+    "deleteSelected": "删除所选 ({{count}})",
     "delete": {
       "title": "删除待办",
       "confirm": "确定要删除这条待办事项吗？"
+    },
+    "bulkDelete": {
+      "title": "批量删除",
+      "confirm": "确定要删除所选的 {{count}} 条待办事项吗？"
     },
     "dueDate": { "none": "无截止日期" },
     "sort": {
@@ -156,7 +163,9 @@
       "deleted": "待办事项已删除。",
       "addFailed": "添加待办事项失败。",
       "updateFailed": "更新待办事项失败。",
-      "deleteFailed": "删除待办事项失败。"
+      "deleteFailed": "删除待办事项失败。",
+      "bulkDeleted": "已成功删除 {{count}} 条待办事项。",
+      "bulkDeleteFailed": "批量删除失败。"
     },
     "category": {
       "added": "分类已添加。",

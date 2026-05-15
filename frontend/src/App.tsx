@@ -7,6 +7,7 @@ import TodosPage from '@/pages/TodosPage';
 import CategoriesPage from '@/pages/CategoriesPage';
 import ProfilePage from '@/pages/ProfilePage';
 import NotFoundPage from '@/pages/NotFoundPage';
+import ToastContainer from '@/components/Toast/ToastContainer';
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/" element={<Navigate to={ROUTES.TODOS} replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 }

@@ -16,4 +16,7 @@ export const todosApi = {
 
   delete: (id: string) =>
     apiClient.delete<ApiResponse>(`/todos/${id}`),
+
+  bulkDelete: (ids: string[]) =>
+    apiClient.delete<ApiResponse<{ count: number }>>('/todos/bulk', { data: { ids } }),
 };
